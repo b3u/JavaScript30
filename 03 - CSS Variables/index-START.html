@@ -2,11 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name ="description" content="Lesson 3 from Wes Bos's JavaScript 30 Course.">
   <title>Scoped CSS Variables and JS</title>
+  <script defer src ="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 </head>
 <body>
+  <main class="main">
   <h2>Update CSS Variables with <span class='hl'>JS</span></h2>
-
   <div class="controls">
     <label for="spacing">Spacing:</label>
     <input id="spacing" type="range" name="spacing" min="10" max="200" value="10" data-sizing="px">
@@ -17,34 +20,99 @@
     <label for="base">Base Color</label>
     <input id="base" type="color" name="base" value="#ffc600">
   </div>
-
+<figure>
   <img src="https://source.unsplash.com/7bwQXzbF6KE/800x500">
-
+  <figcaption>Style Me</figcaption>
+  </figure>
+  
+</main>
+<div class="contact">
+  <b class="contact-name">A pen by Binyamin Green @b3u</b>
+  <div class="contact-icons fa-3x">
+    <i class="fab fa-codepen icon"  data-fa-transform="shrink-6" data-fa-mask="fas fa-square"></i>
+    <i class="fab fa-github-square icon"></i>
+    <i class="fab fa-free-code-camp icon" data-fa-transform="shrink-6" data-fa-mask="fas fa-square"></i>
+  </div>
+</div>
   <style>
 
-    /*
-      misc styles, nothing to do with CSS variables
-    */
+    :root{
+  --base: #ffc600;
+  --spacing: 10px;
+  --blur: 5px;
+}
 
-    body {
-      text-align: center;
-      background: #193549;
-      color: white;
-      font-family: 'helvetica neue', sans-serif;
-      font-weight: 100;
-      font-size: 50px;
-    }
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+  
+  body {
+  margin-top: 2em;
+  text-align: center;
+  background: #193549;
+  color: white;
+  font-family: 'helvetica neue', sans-serif;
+}
+.main {
+  font-size: 2em;
+}
 
-    .controls {
-      margin-bottom: 50px;
-    }
+.hl {
+  color: var(--base);
+}
 
-    input {
-      width:100px;
-    }
+.controls {
+  margin-bottom: 50px;
+}
+
+input {
+  width:100px;
+}
+
+img {
+  width: 50%;
+  padding: var(--spacing);
+  background: var(--base);
+  filter: blur(var(--blur));
+}
+figure {
+  position: relative;
+}
+figcaption {
+  font-size: 2.5em;
+  font-weight: bold;
+  opacity: 0.3;
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  right: -50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Template script */
+.contact {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  bottom: 5px;
+}
+
   </style>
 
   <script>
+ const inputs = document.querySelectorAll('.controls input');
+
+function handleUpdate() {
+  const suffix = this.dataset.sizing || '';
+document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix);
+}
+
+inputs.forEach(input => input.addEventListener('change', handleUpdate));
+inputs.forEach(input => input.addEventListener('mousemove', handleUpdate));
   </script>
 
 </body>
